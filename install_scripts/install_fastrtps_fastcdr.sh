@@ -37,10 +37,10 @@ wget -t 10 $DOWNLOAD_LINK -P $INSTALL_PATH
 tar -zxf ${PKG_NAME}
 
 cd install
-mkdir fastrtps
+sudo mkdir fastrtps
 
 cd ..
-cp -r fast-rtps-1.5.0-1/* ./install/fastrtps
+sudo cp -r fast-rtps-1.5.0-1/* ./install/fastrtps
 
 
 

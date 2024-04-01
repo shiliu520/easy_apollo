@@ -87,6 +87,7 @@ link_directories(${THIRD_LIB_DIR}/gflags/lib)
 include_directories(${THIRD_LIB_DIR}/glog/include)
 link_directories(${THIRD_LIB_DIR}/glog/lib)
 # set(DEP_LIBS ${DEP_LIBS} glog)
+set(glog_DIR ${THIRD_LIB_DIR}/glog/lib/cmake/glog)
 find_package(glog REQUIRED)
 
 #gtest

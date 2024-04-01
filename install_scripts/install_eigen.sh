@@ -19,7 +19,7 @@ cd eigen-git-mirror
 
 mkdir build && cd build
 
-mkdir -p ./../../install/eigen-git-mirror/include/eigen3/
+sudo mkdir -p ./../../install/eigen-git-mirror/include/eigen3/
 cmake .. -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=./../../install/eigen-git-mirror -DCMAKE_BUILD_TYPE=Release
 
 make -j6
