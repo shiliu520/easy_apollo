@@ -5,8 +5,11 @@
 #后续所有的bash命令的返回code如果不是0，那么脚本立即退出
 set -e
 
-#cd "$(dirname "${BASH_SOURCE[0]}")"
+cd "$(dirname "${BASH_SOURCE[0]}")"
 #使用 . 号引用文件, 也可以替换为 source 
+current_directory=$(pwd)
+echo "当前目录: $current_directory"
+# echo "当前目录: $(dirname "${BASH_SOURCE[0]}")"
 . ./install_base.sh
 
 PKG_BASE_NAME=nlohmann_json

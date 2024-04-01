@@ -1,4 +1,5 @@
-include_directories(/usr/include/python3.6)
+# 具体地址通过 python3-config --includes 来查看
+include_directories(/usr/include/python3.8)
 
 add_library(_cyber_wrapper SHARED 
   py_cyber.cc

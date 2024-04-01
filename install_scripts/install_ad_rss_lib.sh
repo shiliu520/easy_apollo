@@ -11,6 +11,7 @@ cd $CURRENT_PATH
 cd ..
 cd third_party
 
+rm -rf ad-rss-lib
 git clone --depth 1 --branch v1.1.0 git@github.com:intel/ad-rss-lib.git
 
 cd ad-rss-lib
@@ -20,8 +21,8 @@ mkdir build && cd build
 cmake .. -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=./../../install/ad_rss_lib -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF 
 
 make -j6
-make install
+sudo make install
 
 cd ..
-cp -r ./src/situation ./../install/ad_rss_lib/include/ad_rss
+sudo cp -r ./src/situation ./../install/ad_rss_lib/include/ad_rss
 

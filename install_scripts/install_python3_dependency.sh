@@ -1,5 +1,6 @@
 
 sudo apt-get install pip
+sudo apt-get install python3-dev
 
 pip install matplotlib==3.7.2
 # pip install matplotlib==3.3.4

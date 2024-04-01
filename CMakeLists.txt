@@ -107,10 +107,10 @@ add_definitions(-DC10_USE_GLOG)
 # message(STATUS "Torch_INCLUDE_DIRS: ${TORCH_INCLUDE_DIRS}")
 
 # ubuntu 1804
-include_directories(/usr/include/python3.6)
+# include_directories(/usr/include/python3.6)
 
 #ubuntu 20.04
-# include_directories(/usr/include/python3.8)
+include_directories(/usr/include/python3.8)
 
 #ad_rss_lib
 include_directories(${THIRD_LIB_DIR}/ad_rss_lib/include)

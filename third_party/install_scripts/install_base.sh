@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-export http_proxy=http://192.168.0.236:10809
-export https_proxy=http://192.168.0.236:10809
+export http_proxy=http://127.0.0.1:7890
+export https_proxy=http://127.0.0.1:7890
 #export all_proxy=socks5://192.168.0.236:10808
 export LOCAL_HTTP_ADDR="http://172.20.1.20:8388"
 

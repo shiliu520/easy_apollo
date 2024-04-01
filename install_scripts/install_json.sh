@@ -18,10 +18,12 @@ cd json
 
 mkdir -p build && cd build
 
-
+sudo mkdir -p ../../install/json
+sudo mkdir -p ../../install/json/include
+sudo mkdir -p ../../install/json/lib
 cmake .. -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=../../install/json -DCMAKE_BUILD_TYPE=Release
 
 make -j6
-make install
+sudo make install
 
 sudo ldconfig

@@ -37,5 +37,5 @@ mkdir build && cd build
 cmake .. -DCMAKE_INSTALL_PREFIX=./../../install/opencv -DCMAKE_BUILD_TYPE=Release
 
 make -j6
-make install
+sudo make install
 
