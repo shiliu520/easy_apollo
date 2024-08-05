@@ -582,6 +582,7 @@ int viz2d_component::process(double max_steering_wheel_angle_)
                                  viz2d_colors_green, 8, true);
     }
 
+    // 小窗口画全局路径
     // draw route in hmap window
     viz2d_draw_route2(hmap_window_, route_path_list_, &hmap_base_pose,
                     viz2d_colors_cyan, 3);
@@ -589,6 +590,7 @@ int viz2d_component::process(double max_steering_wheel_angle_)
     //                 viz2d_colors_cyan, 3);
 
     // draw vehicle position in map window
+    // 自车位置
     viz2d_draw_circle_wrapper(hmap_window_, &veh_global_pose.pos, &hmap_base_pose,
                              viz2d_colors_red, 10, true);
 
@@ -620,7 +622,7 @@ int viz2d_component::process(double max_steering_wheel_angle_)
     viz2d_draw_system_state(main_window_, module_state_, &veh_global_pose);
 
     // control front wheel
-
+    // 用控制期望转角画的圆形，粉色
     double steering_wheel_angle = control_data_.x();
 
     front_wheel_angle =
@@ -633,7 +635,7 @@ int viz2d_component::process(double max_steering_wheel_angle_)
     //   << "\n";
 
     // chassis front wheel
-
+    // 用底盘反馈转角画的圆形，红色
     steering_wheel_angle = chassis_data.y();
 
     front_wheel_angle =
@@ -662,6 +664,7 @@ int viz2d_component::process(double max_steering_wheel_angle_)
 
     switch (key_value_)
     {
+        // 暂停
         case 'p':
             if (debug_mode.pause_debug.enabled)
             {
@@ -685,7 +688,7 @@ int viz2d_component::process(double max_steering_wheel_angle_)
             }
             debug_mode_changed_ = true;
             break;
-
+        // 手自动切换
         case 'r':
             if (drive_mode_ == apollo::canbus::Chassis::COMPLETE_AUTO_DRIVE)
             {
@@ -889,6 +892,7 @@ int viz2d_component::process(double max_steering_wheel_angle_)
 
     draw_obs_list(&viz_subscribe_.perception, veh_global_pose,main_window_);
 
+    // 紫色的全局路径
     viz2d_draw_path(main_window_, lateral_path_, &veh_global_pose,
                     viz2d_colors_purple, 4);
 

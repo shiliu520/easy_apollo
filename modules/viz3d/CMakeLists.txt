@@ -8,6 +8,8 @@ add_compile_options(-fPIC)
 find_package(Protobuf REQUIRED)
 find_package(PCL)
 
+include_directories(${PCL_INCLUDE_DIRS})
+
 add_library(viz3d ${BUILD_TYPE} 
                     viz3d_component.cc
                     draw_path.cc

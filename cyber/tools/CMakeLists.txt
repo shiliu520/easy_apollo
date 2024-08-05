@@ -49,14 +49,14 @@ set_target_properties(cyber_recorder PROPERTIES RUNTIME_OUTPUT_DIRECTORY
     "${CMAKE_BINARY_DIR}/bin/")
 
 
-install(TARGETS cyber_monitor
-                cyber_recorder
-                recorder
-      ARCHIVE DESTINATION lib
-      LIBRARY DESTINATION lib
-      RUNTIME DESTINATION bin
-      RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}
-)
+# install(TARGETS cyber_monitor
+#                 cyber_recorder
+#                 recorder
+#       ARCHIVE DESTINATION lib
+#       LIBRARY DESTINATION lib
+#       RUNTIME DESTINATION bin
+#       RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}
+# )
 
 # cyber_channel cyber_launch cyber_node cyber_service 
 file(COPY 

@@ -222,7 +222,7 @@ TEST(update_polygon_value, test03)
     Polygon2D polygon;
     Pose2D center_pose;
 
-    center_pose = {{1.0, 1.0}, {0.0}};
+    center_pose = {{1.0, 1.0}, 0.0};
     ret = init_polygon(&polygon);
     EXPECT_EQ(ret, 1);
     EXPECT_EQ(polygon.type, POLYGON_ARBITRARY);
@@ -290,7 +290,7 @@ TEST(update_polygon_value, test04)
     uint32_t i;
 
     /* Declare ret as the opposite of the expected result. */
-    center_pose = {{2.0, 1.0}, {0.0}};
+    center_pose = {{2.0, 1.0}, 0.0};
     ret = init_polygon(&polygon);
     EXPECT_EQ(ret, 1);
     EXPECT_EQ(polygon.type, POLYGON_ARBITRARY);

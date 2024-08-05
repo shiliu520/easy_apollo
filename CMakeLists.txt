@@ -42,6 +42,9 @@ find_package(Protobuf REQUIRED)
 include_directories(${PROTOBUF_INCLUDE_DIRS})
 # link_directories(${THIRD_LIB_DIR}/protobuf/lib)
 
+# vtk and pcl
+set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "/home/shiliu/vtk-inst/lib/cmake/vtk-7.1")
+# set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "/usr/share/pcl-1.14/Modules/")
 
 #absl
 #set(absl_DIR ${THIRD_LIB_DIR}/absl/lib/cmake/absl)
@@ -164,7 +167,7 @@ include_directories(
 
 add_subdirectory(cyber)
 add_subdirectory(modules)
-add_subdirectory(test)
+# add_subdirectory(test)
 
 
 configure_file("setup.bash" "${CMAKE_BINARY_DIR}/setup.bash" @ONLY)
