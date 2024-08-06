@@ -1,0 +1,27 @@
+{
+    "files.exclude": {
+        "apollo_scripts": true,
+        "third_party": true,
+        "data": true,
+        "test": true,
+        "doc": true,
+        "cyber": true,
+        "cmake": true,
+        "build": true,
+        "**/*.md": true,
+        "**/BUILD": true,
+        "**/*.sh": true,
+        "**/*.bash": true,
+        "**/cyber_*": true,
+        "modules/audio": true,
+        "modules/calibration": true,
+        "modules/contrib": true,
+        "modules/perception": true,
+        "modules/storytelling": true,
+        "modules/third_party_perception": true,
+        "modules/canbus": true,
+        "modules/drivers": true,
+        "modules/bridge": true,
+        "modules/guardian": true
+    }
+}
