@@ -37,7 +37,6 @@ build/
 *.css
 *.tar.gz
 site/
-.vscode
 
 devel/*
 
