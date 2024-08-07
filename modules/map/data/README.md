@@ -42,7 +42,7 @@ x.txt  # A text pb map.
 
 ## Use a different map
 
-1. [Preferred] Change global flagfile: *common/data/global_flagfile.txt*
+1. [Preferred] Change global flagfile: *modules/common/data/global_flagfile.txt*
 
    Note that it's the basement of all modules' flagfile, which keeps the whole
    system in one page.
@@ -59,8 +59,14 @@ x.txt  # A text pb map.
    Obviously it also only affects a single module.
 
    ```txt
-   --flagfile=common/data/global_flagfile.txt
+   --flagfile=modules/common/data/global_flagfile.txt
 
    # Override values from the global flagfile.
    --map_dir=/path/to/your/map
+   ```
+
+1. Visualize map
+   ```
+   source set_python_env.bash
+   python3 ./modules/tools/mapshow/mapshow.py -m ./modules/map/data/sunnyvale_loop/base_map.bin
    ```
