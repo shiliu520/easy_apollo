@@ -2,8 +2,8 @@ landmark {
     name: "default",
     waypoint {
         pose {
-            x: -6925.30
-            y: -398.10
+            x: -7333.0
+            y: 634.0
         }
     }
     waypoint {
