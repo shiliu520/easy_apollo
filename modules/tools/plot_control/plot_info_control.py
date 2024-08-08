@@ -18,6 +18,30 @@ from matplotlib.widgets import Button
 from matplotlib.widgets import Cursor
 from matplotlib.gridspec import GridSpec
 from  matplotlib import  ticker
+import glob
+
+def get_latest_control_log():
+    # get latest path
+    folder_path = "/home/shiliu/Opensource/easy_apollo/data/log/*"
+    list_of_mixed_path = glob.glob(folder_path)
+    list_of_folder_path = [path for path in list_of_mixed_path if os.path.isdir(path)]
+    latest_path = max(list_of_folder_path, key=os.path.getctime)
+
+    # get latet control.log
+    latest_path += "/*"
+    list_of_files = glob.glob(latest_path)
+    list_of_control = [file for file in list_of_files if 'control.log' in file]
+    latest_control_file = max(list_of_control, key=os.path.getctime)
+    # print(latest_control_file)
+
+    # get start time
+    pattern = r"\d{8}-\d{6}"
+    time = re.findall(pattern, latest_control_file)[0]
+    hour = time[9:11]
+    minute = time[11:13]
+    start_time = hour + ':'+ minute
+    # print(time)
+    return latest_control_file, start_time
 
 def get_string_between(string, st, ed=''):
     """get string between keywords"""
@@ -42,12 +66,12 @@ def get_time(line):
 def get_timestamp_from_line(line):
 
     profile_list = line.split(' ')
-    print(profile_list[1])
+    # print(profile_list[1])
 
     time_item =profile_list[1].split(':')
-    print(time_item)
+    # print(time_item)
     time = time_item[0] + time_item[1] + time_item[2]
-    print(time)
+    # print(time)
 
     return float( time)
 
@@ -86,7 +110,8 @@ def get_single_data_from_line(line, data):
         
 
 def plot_lon_acc(lines, ax):
-    elem_map = {'control_acc': []}
+    elem_map = {'control_acc': [],
+                'planner_acc': []}
     acc =[]
     acc_time =[]
 
@@ -236,11 +261,12 @@ def plot_steering_wheel(lines, ax):
                 #  'cmd_acc': []}
                  'chassis_wheel': [],
 
-                 'pure_pursuit_chassis':[],
-                 'pure_pwj':[],
-                 'pure_step1':[],
-                 'pure_step2':[],
-                 'pure_cpp':[]}
+                #  'pure_pursuit_chassis':[],
+                #  'pure_pwj':[],
+                #  'pure_step1':[],
+                #  'pure_step2':[],
+                #  'pure_cpp':[],
+                 }
     control_wheel =[]
     chassis_wheel =[]
     chassis_wheel_time =[]
@@ -352,7 +378,7 @@ def plot_frame(fig, ax, lines, line_st_num, line_ed_num):
     for value in ax.values():
         value.lines = []
         value.texts = []
-    plot_acc(valid_lines, ax)
+    plot_lon_acc(valid_lines, ax)
 
     for value in ax.values():
         value.legend()
@@ -504,13 +530,12 @@ class Index(object):
     def exit(self, event):
         sys.exit(0)
 
-
-
-if __name__ == '__main__':
+def main():
     global g_argv
     parser = argparse.ArgumentParser()
-    parser.add_argument('-f', action='store', dest='log_file_path', required=True, help='log file path')
-    parser.add_argument('-t', action='store', dest='time', required=False, help='time begin to search')
+    file_path, search_time = get_latest_control_log()
+    parser.add_argument('-f', action='store', dest='log_file_path', required=False, help='log file path', default=file_path)
+    parser.add_argument('-t', action='store', dest='time', required=False, help='time begin to search',default=search_time)
     parser.add_argument('-ut', action='store', dest='unix_time', required=False, help='unix time begin to search')
     parser.add_argument('-s', action='store', dest='seq', required=False, help='sequence number to search')
     g_argv = parser.parse_args()
@@ -593,5 +618,7 @@ if __name__ == '__main__':
     plt.grid(True)
     # 显示图表
     plt.show()
-  
 
+
+if __name__ == '__main__':
+    main()

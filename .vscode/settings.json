@@ -2,7 +2,7 @@
     "files.exclude": {
         "apollo_scripts": true,
         "third_party": true,
-        "data": true,
+        // "data": true,
         "test": true,
         "doc": true,
         "cyber": true,
@@ -23,5 +23,9 @@
         "modules/drivers": true,
         "modules/bridge": true,
         "modules/guardian": true
+    },
+    "files.associations": {
+        "*.json": "jsonc",
+        "lu": "cpp"
     }
 }

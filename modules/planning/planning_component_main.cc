@@ -125,7 +125,7 @@ int main(int argc, char** argv)
 
         if (ptr_routing_response_->road_size() <= 0)
         {
-            AERROR << "No routing";
+        //     AERROR << "No routing";
             continue;
         }
 

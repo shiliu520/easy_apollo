@@ -716,7 +716,7 @@ int viz2d_component::process(double max_steering_wheel_angle_)
             virtual_obs_speed_type_ = -1;
             hmi_perception_.clear_perception_obstacle();
             break;
-        case 'l':
+        case 'a':
 
             if (lane_borrow_manual_.has_lane_borrow_by_manual() &&
                 lane_borrow_manual_.lane_borrow_by_manual())
@@ -733,23 +733,7 @@ int viz2d_component::process(double max_steering_wheel_angle_)
             }
             lane_borrow_manual_changed_ = true;
             break;
-        case 82:
-
-            direction_keys.up = true;
-            break;
-        case 81:
-
-            direction_keys.left = true;
-            break;
-        case 83:
-
-            direction_keys.right = true;
-            break;
-        case 84:
-
-            direction_keys.low = true;
-            break;
-        case 'i':
+        case 'l':
 
             if (lane_borrow_manual_.has_lane_borrow_by_manual() &&
                 lane_borrow_manual_.lane_borrow_by_manual())
@@ -766,7 +750,6 @@ int viz2d_component::process(double max_steering_wheel_angle_)
             }
             lane_borrow_manual_changed_ = true;
             break;
-
         case 't':
             switch (manual_traffic_light_color_)
             {
@@ -794,6 +777,18 @@ int viz2d_component::process(double max_steering_wheel_angle_)
             AINFO << "traffic light color: " << manual_traffic_light_color_;
 
             manual_traffic_light_color_changed_ = true;
+            break;
+        case 'Q':
+            direction_keys.left = true;
+            break;
+        case 'R':
+            direction_keys.up = true;
+            break;
+        case 'S':
+            direction_keys.right = true;
+            break;
+        case 'T':
+            direction_keys.low = true;
             break;
         default:
             break;

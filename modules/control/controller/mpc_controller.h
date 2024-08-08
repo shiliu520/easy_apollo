@@ -172,8 +172,10 @@ protected:
     // wheels
     double steer_ratio_ = 0.0;
     // the maximum turn of steer
+    // 方向盘最大转角，单位度
     double steer_single_direction_max_degree_ = 0.0;
     // the maximum turn of vehicle wheel
+    // 车轮最大转角，单位弧度
     double wheel_single_direction_max_degree_ = 0.0;
 
     // limit steering to maximum theoretical lateral acceleration

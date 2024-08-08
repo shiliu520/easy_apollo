@@ -11,7 +11,7 @@ source ../setup.bash
 
 cmake ..
 # make -j6 -DARM=0 -DCMAKE_INSTALL_PREFIX=${INSTALL_SPACE}
-make -j4
+make -j2
 sudo make install
 # cd ${SCRIPT_DIR}/${INSTALL_SPACE} && ./encrypt_param.sh
 # cd ${SCRIPT_DIR}/${INSTALL_SPACE}/etc && rm *.json

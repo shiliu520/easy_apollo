@@ -148,7 +148,7 @@ int VirtualChassis::Process()
 {
     history_state_ = state_;
 
-    chassis_update_type type = chassis_update_type::time_delay;
+    chassis_update_type type = chassis_update_type::perfect_response;
     if (type == chassis_update_type::perfect_response)
     {
         PerfectResponse();

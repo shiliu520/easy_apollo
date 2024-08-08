@@ -143,7 +143,7 @@ int main(int argc, char** argv)
             continue;
         }
 
-        AINFO << "chassis frame interval (ms): " << delta_time;
+        // AINFO << "chassis frame interval (ms): " << delta_time;
 
         chassis.process();
 

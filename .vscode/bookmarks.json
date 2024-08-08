@@ -1,0 +1,24 @@
+{
+	"files": [
+		{
+			"path": "modules/control/controller/mpc_controller.cc",
+			"bookmarks": [
+				{
+					"line": 650,
+					"column": 77,
+					"label": ""
+				},
+				{
+					"line": 723,
+					"column": 32,
+					"label": ""
+				},
+				{
+					"line": 910,
+					"column": 61,
+					"label": ""
+				}
+			]
+		}
+	]
+}

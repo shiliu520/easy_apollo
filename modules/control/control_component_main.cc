@@ -130,7 +130,7 @@ int main(int argc, char** argv)
             control.publish_msg();
         }
 
-        AINFO << "control frame interval (ms): " << delta_time;
+        // AINFO << "control frame interval (ms): " << delta_time;
 
         const apollo::RunningTimeDebug *debug = apollo::get_debug_info();
 

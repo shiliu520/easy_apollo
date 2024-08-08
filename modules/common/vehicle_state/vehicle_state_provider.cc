@@ -35,7 +35,7 @@ Status VehicleStateProvider::Update(
         const localization::LocalizationEstimate &localization,
         const canbus::Chassis &chassis)
 {
-    AINFO << "update internal position";
+    // AINFO << "update internal position";
 
     original_localization_ = localization;
     if (!ConstructExceptLinearVelocity(localization))
@@ -47,7 +47,7 @@ Status VehicleStateProvider::Update(
         return Status(ErrorCode::LOCALIZATION_ERROR, msg);
     }
 
-    AINFO << "update localization speed";
+    // AINFO << "update localization speed";
 
     if (localization.has_measurement_time())
     {

@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 
     // FLAGS_map_dir = "./../data/sunnyvale_big_loop";
     // FLAGS_map_dir = "./../data/sunnyvale";
-    FLAGS_map_dir = "./../data/borregas_ave";
+    FLAGS_map_dir = "/home/shiliu/Opensource/apollo_map/sunnyvale_loop";
     // FLAGS_map_dir = "./../data/apollo_virutal_map";
 
     const auto map_filename = FLAGS_map_dir + "/base_map.bin";

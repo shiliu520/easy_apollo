@@ -42,6 +42,7 @@ using apollo::common::VehicleStateProvider;
 using apollo::cyber::Clock;
 using Matrix = Eigen::MatrixXd;
 using apollo::common::VehicleConfigHelper;
+using apollo::canbus::Chassis;
 
 namespace
 {
@@ -95,6 +96,8 @@ bool MPCController::LoadControlConf(const ControlConf* control_conf)
     cr_ = control_conf->mpc_controller_conf().cr();
     wheelbase_ = vehicle_param_.wheel_base();
     steer_ratio_ = vehicle_param_.steer_ratio();
+    // 方向盘最大转角，单位度
+    // max_steer_angle，单位弧度
     steer_single_direction_max_degree_ =
             vehicle_param_.max_steer_angle() * 180 / M_PI;
     max_lat_acc_ =
@@ -108,6 +111,7 @@ bool MPCController::LoadControlConf(const ControlConf* control_conf)
         AERROR << "[MPCController] steer_ratio = 0";
         return false;
     }
+    // 车轮最大转角，单位弧度
     wheel_single_direction_max_degree_ =
             steer_single_direction_max_degree_ / steer_ratio_ / 180 * M_PI;
     max_acceleration_ = vehicle_param_.max_acceleration();
@@ -485,6 +489,7 @@ Status MPCController::ComputeControlCommand(
         control[0](1, 0) = control_cmd.at(1);
     }
 
+    // 闭环计算出来的方向盘转角，百分比
     steer_angle_feedback = Wheel2SteerPct(control[0](0, 0));
     acc_feedback = control[0](1, 0);
 
@@ -641,6 +646,7 @@ Status MPCController::ComputeControlCommand(
 
     double acceleration_cmd = acc_feedback + debug->acceleration_reference();
     // TODO(QiL): add pitch angle feed forward to accommodate for 3D control
+    // TODO: filter small dec
 
     if ((planning_published_trajectory->trajectory_type() ==
          apollo::planning::ADCTrajectory::NORMAL) &&
@@ -653,7 +659,7 @@ Status MPCController::ComputeControlCommand(
                         ? std::max(acceleration_cmd, -standstill_acceleration_)
                         : std::min(acceleration_cmd, standstill_acceleration_);
 
-        AWARN << "Stop location reached";
+        // AWARN << "Stop location reached";
         debug->set_is_full_stop(true);
     }
     // TODO(Yu): study the necessity of path_remain and add it to MPC if needed
@@ -716,6 +722,15 @@ Status MPCController::ComputeControlCommand(
     }
 
     ProcessLogs(debug, chassis);
+
+    AINFO << "print_planner_acc: (" << debug->acceleration_reference() << ")";
+    AINFO << "print_control_acc: (" << acceleration_cmd << ")";
+    AINFO << "print_adc_speed: (" << vehicle_state->linear_velocity() << ")";
+    AINFO << "print_adc_offset: (" << debug->lateral_error() << ")";
+    AINFO << "print_adc_lateral_acc: (" << debug->lateral_acceleration() << ")";
+    AINFO << "print_control_wheel: (" << cmd->steering_target() / 100 * steer_single_direction_max_degree_ << ")";
+    AINFO << "print_chassis_wheel: (" << debug->steering_position() / 100 * steer_single_direction_max_degree_ << ")";
+
     return Status::OK();
 }
 
@@ -893,13 +908,13 @@ void MPCController::ComputeLongitudinalErrors(
 
     TrajectoryPoint reference_point;
 
-    // if (injector_->vehicle_state()->linear_velocity() < 0.02)
-    // {
-		// 如果车辆静止，使用固定时间搜索ref point
-    //     reference_point = trajectory_analyzer->QueryNearestPointByRelativeTime(
-    //             40.0 / 1000);
-    // }
-    // else
+    if (injector_->vehicle_state()->linear_velocity() < 0.02)
+    {
+	// 如果车辆静止, 使用固定时间搜索ref point
+        reference_point = trajectory_analyzer->QueryNearestPointByRelativeTime(
+                10.0 / 1000);
+    }
+    else
     {
         // 如果车辆动起来，使用时间寻找ref point
         reference_point = trajectory_analyzer->QueryNearestPointByAbsoluteTime(
