@@ -36,8 +36,11 @@ Status PublicRoadPlanner::Plan(const TrajectoryPoint& planning_start_point,
                                Frame* frame,
                                ADCTrajectory* ptr_computed_trajectory)
 {
+    // 更新场景，决策当前应该执行什么场景
     scenario_manager_.Update(planning_start_point, *frame);
+    // 获取当前场景
     scenario_ = scenario_manager_.mutable_scenario();
+    // 执行当前场景的任务
     auto result = scenario_->Process(planning_start_point, frame);
 
     if (FLAGS_enable_record_debug)

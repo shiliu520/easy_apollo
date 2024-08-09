@@ -159,9 +159,32 @@ bool MPCController::LoadControlConf(const ControlConf* control_conf)
 }
 
 void MPCController::ProcessLogs(const SimpleMPCDebug* debug,
-                                const canbus::Chassis* chassis)
+                                const canbus::Chassis* chassis,
+                                ControlCommand* cmd,
+                                const planning::ADCTrajectory* planning_published_trajectory)
 {
     // TODO(QiL): Add debug information
+    // control_steer和vehicle_steer都是方向盘转角，单位：度
+    // lateral_error: 单位m
+    // heading_error: 单位rad
+    const std::string log_str = absl::StrCat(
+            "planner_acc:", debug->acceleration_reference(), ", ",
+            "control_acc:", cmd->acceleration(), ", ",
+            "vehicle_acc:", debug->acceleration_feedback(), ", ",
+            "expt_throttle:", cmd->throttle(), ", ",
+            "expt_brake:", cmd->brake(), ", ",
+            "planner_vel:", debug->speed_reference(), ", ",
+            "vehicle_vel:", debug->speed_feedback(), ", ",
+            "planner_shift:", planning_published_trajectory->gear(), ", ",
+            "control_shift:", cmd->gear_location(), ", ",
+            "vehicle_shift:", chassis->gear_location(), ", ",
+            "control_steer:", cmd->steering_target() / 100 * steer_single_direction_max_degree_, ", ",
+            "vehicle_steer:", debug->steering_position() / 100 * steer_single_direction_max_degree_, ", ",
+            "lateral_error:", debug->lateral_error(), ", ",
+            "heading_error:", debug->heading_error(), ", ",
+            "auto_status:", chassis->driving_mode()
+            );
+    AINFO << log_str;
 }
 
 void MPCController::LogInitParameters()
@@ -536,6 +559,7 @@ Status MPCController::ComputeControlCommand(
            << (mpc_end_timestamp - mpc_start_timestamp) * 1000 << " ms.";
 
     // TODO(QiL): evaluate whether need to add spline smoothing after the result
+    // 百分比
     double steer_angle = steer_angle_feedback +
                          steer_angle_feedforwardterm_updated_ +
                          steer_angle_ff_compensation;
@@ -648,6 +672,11 @@ Status MPCController::ComputeControlCommand(
     // TODO(QiL): add pitch angle feed forward to accommodate for 3D control
     // TODO: filter small dec
 
+    if (acceleration_cmd == std::clamp(acceleration_cmd, -0.1, 0.0))
+    {
+        acceleration_cmd = 0.0;
+    }
+
     if ((planning_published_trajectory->trajectory_type() ==
          apollo::planning::ADCTrajectory::NORMAL) &&
         (std::fabs(debug->acceleration_reference()) <=
@@ -721,15 +750,7 @@ Status MPCController::ComputeControlCommand(
         cmd->set_gear_location(chassis->gear_location());
     }
 
-    ProcessLogs(debug, chassis);
-
-    AINFO << "print_planner_acc: (" << debug->acceleration_reference() << ")";
-    AINFO << "print_control_acc: (" << acceleration_cmd << ")";
-    AINFO << "print_adc_speed: (" << vehicle_state->linear_velocity() << ")";
-    AINFO << "print_adc_offset: (" << debug->lateral_error() << ")";
-    AINFO << "print_adc_lateral_acc: (" << debug->lateral_acceleration() << ")";
-    AINFO << "print_control_wheel: (" << cmd->steering_target() / 100 * steer_single_direction_max_degree_ << ")";
-    AINFO << "print_chassis_wheel: (" << debug->steering_position() / 100 * steer_single_direction_max_degree_ << ")";
+    ProcessLogs(debug, chassis, cmd, planning_published_trajectory);
 
     return Status::OK();
 }

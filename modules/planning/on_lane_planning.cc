@@ -561,6 +561,7 @@ void OnLanePlanning::RunOnce(const LocalView& local_view,
           << "(" << planning_pre_process_diff * 1000 << ","
           << ")";
 
+    // 车道级规划
     status = Plan(start_timestamp, stitching_trajectory, ptr_trajectory_pb);
 
     // for (const auto& p : ptr_trajectory_pb->trajectory_point())

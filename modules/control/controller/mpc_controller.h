@@ -129,7 +129,9 @@ protected:
     void LogInitParameters();
 
     void ProcessLogs(const SimpleMPCDebug* debug,
-                     const canbus::Chassis* chassis);
+                     const canbus::Chassis* chassis,
+                     ControlCommand* cmd,
+                     const planning::ADCTrajectory* planning_published_trajectory);
 
     void CloseLogFile();
 

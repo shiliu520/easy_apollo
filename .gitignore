@@ -105,3 +105,8 @@ modules/map/data/sunnyvale_loop/sim_map.txt
 modules/map/data/sunnyvale_with_two_offices/base_map.bin
 .vscode/c_cpp_properties.json
 .vscode/tasks.json
+
+modules/localization/*
+modules/perception/*
+modules/drivers/*
+modules/tools/ota/*

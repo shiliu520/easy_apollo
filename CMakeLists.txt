@@ -109,11 +109,25 @@ add_definitions(-DC10_USE_GLOG)
 # message(STATUS "Torch_LIBRARIES: ${TORCH_LIBRARIES}")
 # message(STATUS "Torch_INCLUDE_DIRS: ${TORCH_INCLUDE_DIRS}")
 
-# ubuntu 1804
-include_directories(/usr/include/python3.6)
-
-#ubuntu 20.04
-# include_directories(/usr/include/python3.8)
+# 检测操作系统版本
+execute_process(
+    COMMAND lsb_release -rs
+    OUTPUT_VARIABLE os_version
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    message(STATUS "CMAKE_SYSTEM_VERSION: ${os_version}")
+    if (os_version MATCHES "18.04")
+        # 对于 Ubuntu 18.04 设置特定的 include 路径
+        include_directories(/usr/include/python3.6)
+    elseif (os_version MATCHES "20.04")
+        # 对于 Ubuntu 20.04 设置特定的 include 路径
+        include_directories(/usr/include/python3.8)
+    else()
+        # 处理其他未识别的版本
+        message(FATAL_ERROR "Unsupported Ubuntu version")
+    endif()
+endif()
 
 #ad_rss_lib
 include_directories(${THIRD_LIB_DIR}/ad_rss_lib/include)

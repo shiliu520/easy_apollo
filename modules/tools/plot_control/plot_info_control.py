@@ -22,7 +22,7 @@ import glob
 
 def get_latest_control_log():
     # get latest path
-    folder_path = "/home/shiliu/Opensource/easy_apollo/data/log/*"
+    folder_path = "/ssd/open_source/easy_apollo/data/log/*"
     list_of_mixed_path = glob.glob(folder_path)
     list_of_folder_path = [path for path in list_of_mixed_path if os.path.isdir(path)]
     latest_path = max(list_of_folder_path, key=os.path.getctime)
@@ -111,26 +111,30 @@ def get_single_data_from_line(line, data):
 
 def plot_lon_acc(lines, ax):
     elem_map = {'control_acc': [],
-                'planner_acc': []}
-    acc =[]
-    acc_time =[]
+                'planner_acc': []
+                }
+    acc_control =[]
+    acc_planner = []
+    acc_control_time =[]
 
     for line in lines:
         for key in elem_map.keys():
             name = "print_" + key + ":"
             if name in line:
                 get_single_data_from_line(line, elem_map[key])
-                # print(elem_map[key][0][0])
-                acc.append( elem_map[key][0][0])
-
                 time =  get_timestamp_from_line(line)
-                acc_time.append(time)
-    
+                # print(elem_map[key][0][0])
+                if key == "control_acc":
+                    acc_control.append( elem_map[key][0][0])
+                    acc_control_time.append(time)
+                elif key == "planner_acc":
+                    acc_planner.append( elem_map[key][0][0])
+
     # print(acc)
 
-    x = [x+1 for x in range(len(acc))]
-    # 纵坐标
-    y = acc
+    # x = [x+1 for x in range(len(acc))]
+    # # 纵坐标
+    # y = acc
     # 生成折线图：函数polt
     # plt.plot(x, y)    
 
@@ -139,7 +143,11 @@ def plot_lon_acc(lines, ax):
 
     for key in elem_map.keys():
         if elem_map[key]:
-            x = acc_time
+            x = acc_control_time
+            if key == "control_acc":
+                y = acc_control
+            elif key == "planner_acc":
+                y = acc_planner
             ax["acc"].plot(x,y, '-', label= key)
     
     # ax["acc"].set_ylim(-10, 10)
@@ -455,7 +463,7 @@ class MouseEventManager(object):
     def on_click(self, event):
         # if mouse button is not right, return
         # 1: left, 2: middle, 3: right
-        if event.button is not 3:
+        if event.button != 3:
             return
         self.x, self.y = event.xdata, event.ydata
         if self.x is not None:
@@ -542,7 +550,8 @@ def main():
     print('Please wait for loading data...')
 
     # load log file
-    print (g_argv)
+    print("log_file_path:", g_argv.log_file_path)
+    print("start_time   :", g_argv.time)
     file_path = g_argv.log_file_path
     #file_path = parse_pb_log(file_path)
     search_time = g_argv.time
@@ -564,7 +573,7 @@ def main():
     else:
         print( 'search time or sequence number or unix time is required, quit!')
 
-    print( line_search_num)
+    # print( line_search_num)
     # # check whether time is exist
     # if line_search_num == 0:
     #     print( 'no such time, quit!')

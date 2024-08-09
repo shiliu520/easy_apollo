@@ -91,7 +91,7 @@ Scenario::ScenarioStatus Scenario::Process(
               << "\n";
 
 #endif
-
+    // 场景任务
     auto ret = current_stage_->Process(planning_init_point, frame);
     switch (ret)
     {
