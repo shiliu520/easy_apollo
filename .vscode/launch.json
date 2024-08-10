@@ -27,8 +27,44 @@
         },
 
         {
+            "name": "gdb单启进程调试",
+            "type": "cppdbg",
+            "request": "launch",
+            "cwd": "/home/shiliu/Opensource/easy_apollo/build/bin",
+            "program": "/home/shiliu/Opensource/easy_apollo/build/bin/mainboard",
+            "MIMode": "gdb",
+            "environment": [
+                {
+                    "description": "same as commands below by using 'setenv ...",
+                    "info": "set env",
+                    "name": "LD_LIBRARY_PATH",
+                    "value": ":/home/shiliu/Opensource/easy_apollo/build:/home/shiliu/Opensource/easy_apollo/build/../third_party/install/abseil-cpp/lib:/home/shiliu/Opensource/easy_apollo/build/../third_party/install/ad_rss_lib/lib:/home/shiliu/Opensource/easy_apollo/build/../third_party/install/osqp/lib:/home/shiliu/Opensource/easy_apollo/build/../third_party/install/libtorch_cpu/lib:/home/shiliu/Opensource/easy_apollo/build/../third_party/install/proj4/lib:/home/shiliu/Opensource/easy_apollo/build/../third_party/install/opencv/lib:/home/shiliu/Opensource/easy_apollo/build/../third_party/install/googletest/lib:/home/shiliu/Opensource/easy_apollo/build/../third_party/install/glog/lib:/home/shiliu/Opensource/easy_apollo/build/../third_party/install/gflags/lib:/home/shiliu/Opensource/easy_apollo/build/../third_party/install/fastrtps/lib:/home/shiliu/Opensource/easy_apollo/build/../third_party/install/fastrtps/lib:/home/shiliu/Opensource/easy_apollo/build/lib:/home/shiliu/Opensource/easy_apollo/build:/home/shiliu/Opensource/easy_apollo/build/../third_party/install/abseil-cpp/lib:/home/shiliu/Opensource/easy_apollo/build/../third_party/install/ad_rss_lib/lib:/home/shiliu/Opensource/easy_apollo/build/../third_party/install/osqp/lib:/home/shiliu/Opensource/easy_apollo/build/../third_party/install/libtorch_cpu/lib:/home/shiliu/Opensource/easy_apollo/build/../third_party/install/proj4/lib:/home/shiliu/Opensource/easy_apollo/build/../third_party/install/opencv/lib:/home/shiliu/Opensource/easy_apollo/build/../third_party/install/googletest/lib:/home/shiliu/Opensource/easy_apollo/build/../third_party/install/glog/lib:/home/shiliu/Opensource/easy_apollo/build/../third_party/install/gflags/lib:/home/shiliu/Opensource/easy_apollo/build/../third_party/install/fastrtps/lib:/home/shiliu/Opensource/easy_apollo/build/../third_party/install/fastrtps/lib:/home/shiliu/Opensource/easy_apollo/build/lib"
+                },
+                {
+                    "name": "CYBER_PATH",
+                    "value": "/home/shiliu/Opensource/easy_apollo/build/../cyber"
+                }
+            ],
+            "setupCommands": [
+                {
+                    "description": "为 gdb 启用整齐打印",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "将反汇编风格设置为 Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ],
+            "args": [
+                "-d", "/home/shiliu/Opensource/easy_apollo/modules/planning/dag/planning.dag",
+            ]
+        },
+
+        {
             "name": "python启动模式调试",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
